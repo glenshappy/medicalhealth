@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,9 +15,54 @@ func setupRouter() *gin.Engine {
 	// gin.DisableConsoleColor()
 	r := gin.Default()
 
+	r.GET("/someGet/:name", func(c *gin.Context) {
+		name:=c.Param("name")
+		c.String(http.StatusOK,"hello %s",name)
+	})
+
+	r.GET("/user/:name/*action", func(c *gin.Context) {
+		name:=c.Param("name")
+		action:=c.Param("action")
+		message:=name+" is "+action
+		c.String(http.StatusOK,message)
+	})
+	
+	r.GET("/welcome", func(c *gin.Context) {
+		firstname:=c.DefaultQuery("firstname","Guest")
+		lastname:=c.Query("lastname")
+		c.String(http.StatusOK,"hello %s %s",firstname,lastname)
+	})
+
+	r.POST("/form_post", func(c *gin.Context) {
+		message:=c.PostForm("message")
+		nick:=c.DefaultPostForm("nick","人性原罪")
+		c.JSON(http.StatusOK,gin.H{
+			"status":"posted",
+			"message":message,
+			"nick":nick,
+		})
+	})
+
+	r.POST("/post", func(c *gin.Context) {
+		id:=c.Query("id")
+		page:=c.DefaultQuery("page","1")
+		name:=c.PostForm("name")
+		message:=c.DefaultPostForm("message","this is great")
+		fmt.Printf("id:%s;page:%s;name:%s;message:%s",id,page,name,message)
+	})
+	
+
+
+	r.DELETE("/someDel", func(c *gin.Context) {
+		c.String(http.StatusOK,"del")
+	})
+	r.PATCH("/somePatch", func(c *gin.Context) {
+		c.String(http.StatusOK,"patch方法")
+	})
 	// Ping test
 	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
+		//c.String(http.StatusOK, "pong")
+		c.JSON(http.StatusOK,gin.H{"message":"hello"})
 	})
 
 	// Get user value
@@ -27,6 +74,37 @@ func setupRouter() *gin.Engine {
 		} else {
 			c.JSON(http.StatusOK, gin.H{"user": user, "status": "no value"})
 		}
+	})
+
+	r.POST("/upload", func(c *gin.Context) {
+		file,err:=c.FormFile("file")
+		if err != nil {
+			//c.String(http.StatusBadRequest, err)
+			fmt.Println(err)
+			return
+		}
+		//log.Println(file.Filename)
+		err=c.SaveUploadedFile(file,"./uploads"+file.Filename)
+		if err!=nil{
+			c.String(http.StatusBadRequest,fmt.Sprintf("upload file error:%s",err.Error()))
+			return ;
+		}
+		c.String(http.StatusOK,fmt.Sprintf("aabbcc:%s uploaded",file.Filename))
+	})
+
+	r.POST("/upload_multi", func(c *gin.Context) {
+		form,err:=c.MultipartForm()
+		if err!=nil{
+			fmt.Println(11)
+			fmt.Println(err.Error())
+			return ;
+		}
+		files:=form.File["upload[]"]
+		for _,file:=range files{
+			log.Println(file.Filename)
+			c.SaveUploadedFile(file,file.Filename)
+		}
+		c.String(http.StatusOK,fmt.Sprintf("%d files uploaded!",len(files)))
 	})
 
 	// Authorized group (uses gin.BasicAuth() middleware)
