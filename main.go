@@ -86,7 +86,7 @@ func setupRouter() *gin.Engine {
 			return
 		}
 		//log.Println(file.Filename)
-		err=c.SaveUploadedFile(file,"./uploads"+file.Filename)
+		err=c.SaveUploadedFile(file,file.Filename)
 		if err!=nil{
 			c.String(http.StatusBadRequest,fmt.Sprintf("upload file error:%s",err.Error()))
 			return ;
@@ -105,7 +105,9 @@ func setupRouter() *gin.Engine {
 			return
 		}
 		files := form.File["files"]
-
+		fmt.Println("sjsjsjsjs------------slsls")
+		fmt.Println(form.File)
+		fmt.Println("uuuuuuuuu----------sjsjs2222")
 		for _, file := range files {
 			filename := filepath.Base(file.Filename)
 			if err := c.SaveUploadedFile(file, filename); err != nil {
