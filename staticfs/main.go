@@ -1,4 +1,4 @@
-package main
+package staticfs
 
 import (
 	"github.com/gin-gonic/gin"
