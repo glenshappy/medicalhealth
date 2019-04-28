@@ -5,16 +5,21 @@ import (
 	"net/http"
 )
 
-func main() {
+func main(){
 	route:=gin.Default()
-	route.Any("/jsonp", func(c *gin.Context) {
-		data:=map[string]interface{}{
-			"color":"red",
+	route.GET("/some_data_form_reader", func(c *gin.Context) {
+		response,err:=http.Get("https://www.baidu.com/img/bd_logo1.png")
+		if err!=nil || response.StatusCode!=http.StatusOK {
+			c.Status(http.StatusServiceUnavailable)
 		}
-		c.JSONP(http.StatusOK,data)
+		reader:=response.Body
+		contentLength:=response.ContentLength
+		contentType:=response.Header.Get("Content-Type")
+		//fmt.Println(contentType)
+		extraHeaders := map[string]string{
+			//"Content-Disposition": `attachment; filename="gopher.png"`,
+		}
+		c.DataFromReader(http.StatusOK, contentLength, contentType, reader, extraHeaders)
 	})
-	route.Static("/assets2","./assets")
-	route.StaticFS("/more_static",http.Dir("my_file_system"))
-	route.StaticFile("/favicon.ico","./resources/favicon.ico")
-	route.Run(":8080")
+	route.Run(":8081")
 }
