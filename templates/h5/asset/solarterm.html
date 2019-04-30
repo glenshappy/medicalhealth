@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    <link rel="stylesheet" href="css/asset.css"/>
+</head>
+<body>
+</body>
+<!-- 模板 -->
+<script id="container" type="text/html">
+         <div id="body_content" style="overflow: scroll;">
+             <div class="jq_pic" style="background:url('{{banner}}') no-repeat center;background-size: cover;"></div>
+            	<p class="rang_time">{{start_date}}至{{end_time}}</p>
+            {{each hous}}
+            <div class="hours">
+            	<div class="head">
+            		<div class="left">
+        			 	{{if $value.selected=="1"}}
+            			<p class="dotted"></p>
+        			    {{/if}}
+            			<p>{{$value.houname}}</p>
+            		</div>
+            		<div class="right">
+            			<div>{{$value.title}}</div>
+            		</div>
+            	</div>
+            	<div class="img" style="background:url('{{$value.img}}') no-repeat center;background-size: cover;"></div>
+            	<div class="body">{{$value.memo}}</div>
+            </div>
+            {{/each}}
+            <div class="details">
+            	<div class="title_">
+            		<p>{{solar_term_name}}养生</p>
+            	</div>
+            	<div class="bodyCount">{{#body}}</div>
+            </div>
+    </div>
+</script>
+<!-- 模板 -->
+<script src="//config.suixingkang.com/js/jquery/jquery-3.3.3.min.js"></script>
+<script src="//config.suixingkang.com/js/sxkui/sxkui-test-1.0.js"></script>
+<script src="//config.suixingkang.com/js/lib/template-web.js"></script>
+<script>
+    var sxkui = new SXKUI('index');
+    var param = {
+    	solartermId: sxkui.getQuery('id'),
+    	type: sxkui.getQuery('type'),
+    }
+    sxkui.json('time/solarterminfo', param, function (data) {
+        var html = template('container', data.datas);
+        $('body').html(html);
+         sxkui.setTitle(data.datas.solar_term_name);
+    });
+</script>
+</html>

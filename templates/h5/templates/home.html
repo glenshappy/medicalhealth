@@ -1,0 +1,210 @@
+<ion-view cache-view='false'>
+	<ion-content style='background-color: #e7e7e7;'>
+		<div id="home">
+			<div class="vip_link">
+				<ion-slide-box does-continue='true' auto-play='true' on-slide-changed="slideChanged($index)">
+					<ion-slide ng-repeat='item in data.banner track by item.title'>
+						<img ng-src="{{item.img}}" alt="" ng-click='goLink1(item.link)' />
+					</ion-slide>
+				</ion-slide-box>
+				<div class="weather_icon" ng-style="{'background': 'url('+ data.weather.icon + ') no-repeat  center','background-size': '100% 100%'}" ng-click='iconDetail()'></div>
+				<div class="warn_index" ng-click='seewarn()'></div>
+			</div>
+			<div class="daybyday">
+				<div ng-repeat='mm in daylist track by mm.typeId' ng-class="{'grayAlery': mm.state == '1'}" ng-click='dayhealthdetail(mm.url)'>
+					<div class="icon_day" ng-if='mm.fangans != "0"' style="background-color: {{mm.color}};">{{mm.fangans}}</div>
+					<div ng-style="{'background': 'url('+ mm.icon + ') no-repeat','background-size': '100%'}"></div>
+					<p>{{mm.name}}</p>
+				</div>
+			</div>
+			<div class="count_list flex">
+				<div ng-repeat='list in data.clock track by list.name' ng-click='goListDetail(list.url)'> 
+					<p>{{list.name}}</p>
+					<p>{{list.progress}}</p>
+					<div style="margin-bottom: 6px;" ng-if='list.state == "0"'>{{list.btn_text}}</div>
+					<div style="margin-bottom: 6px;background-color: #c1c1c1;" ng-if='list.state == "1"' >{{list.btn_text}}</div>
+					<div style="margin-bottom: 6px;background-color: #c1c1c1;" ng-if='list.state == "-1"'>{{list.btn_text}}</div>
+				</div>
+				<div ng-click='goDetail1(data.hour.url)'>
+					<div class="flex top">
+						<div ng-style="{'background': 'url('+ data.hour.shichen + ') no-repeat  center','background-size': '100% 100%'}"></div>
+						<h3>{{data.hour.hour_name}}</h3>
+					</div>
+					<p style="white-space: pre-line;">{{data.hour.health_principle}}</p>
+				</div>
+			</div>
+			<div class="healthStudy" ng-if='data.news.articles.length != "0"'>
+				<div class="top flex">
+					<div></div>
+					<div ng-click='goMore()'><span>更多</span> <span></span></div>
+				</div>
+				<div class="studyList flex" ng-repeat='newList in data.news.articles track by newList.id' ng-click='newsDetail1(newList.id)'>
+					<div ng-style="{'background': 'url('+ newList.img + ') no-repeat center center','background-size': 'cover'}"></div>
+					<div>
+						<h5 ng-if='newList.title.length >= 30'>{{newList.title.substring(0, 30)}} ...</h5>
+						<h5 ng-if='newList.title.length < 30'>{{newList.title}}</h5>
+						<div id="model">
+							<span ng-repeat='model in newList.labels track by model.id' ng-if='$index <= "2"' ng-click='go_label_list(model.id)'>{{model.name}}</span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="down">
+				<div>
+					<div></div>
+					<div>已经到底了哦</div>
+					<div></div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+		<div id="guide1" ng-click='next_guide(1)'>
+			
+		</div>
+		<div id="guide2" ng-click='next_guide(2)'>
+			
+		</div>
+		<div id="guide3" ng-click='next_guide(3)'>
+			
+		</div>
+		<div id="home_warn" ng-class="{'isCard': data.user.isActivate == '1'}">
+			<div class="content_warn" ng-if='data.user.isActivate == "1"'>
+				<div class="head0">
+					<div class="havecom" ng-if='warnMessage.company.name'>
+						<div ng-style="{'background': 'url('+ warnMessage.company.logo + ') no-repeat  center','background-size': '100% 100%'}"></div>
+						<div>
+							<p>{{warnMessage.company.name}}</p>
+							<p>
+								<span></span>
+								<span>{{warnMessage.calendar.slogan}}</span>
+							</p>
+						</div>
+					</div>
+					<div class="nocom" ng-if='!warnMessage.company.name'>
+						<p>
+							<span></span>
+							<span>{{warnMessage.calendar.slogan}}</span>
+						</p>
+					</div>
+				</div>
+				<div class="head1">
+					<div>{{warnMessage.calendar.day}}</div>
+					<div>
+						<p>{{warnMessage.calendar.date}}</p>
+						<p>{{warnMessage.calendar.animal}} {{warnMessage.calendar.lunar_date}}</p>
+					</div>
+					<div ng-click='goJieQi(warnMessage.solarterm.url)'>
+						<p>{{warnMessage.solarterm.solar_term_name}}</p>
+						<p>
+							<span>{{warnMessage.solarterm.hou}}</span>
+							<span>{{warnMessage.solarterm.tian}}</span>
+						</p>
+					</div>
+				</div>
+				<div class="middle top" ng-if='warnMessage.top'>
+					<div class="list1" ng-repeat='list0 in warnMessage.top' ng-click='warnDetail(list0.redirect_url,list0.queueId)'>
+						<div>
+							<span>{{list0.memo}}</span>
+						</div>
+						<div ng-class="{'othermessage_top': list0.redirect_url == ''}"></div>
+					</div>
+				</div>
+				<div class="middle" ng-if='warnMessage.clock.length != 0'>
+					<div class="listtitle1" style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+						<div class="headtitle">
+							<div></div>
+							<div>今日健康任务</div>
+							<div></div>
+						</div>
+						<div class="toggleDiv" ng-if='warnMessage.clock[0].total > 3'>
+							<div class="open" ng-click='slidedown()'>全部</div>
+							<div class="close" ng-click='slideup()'>收起</div>
+						</div>
+					</div>
+					<div class="ideaIndex" ng-repeat='idea in warnMessage.clock'>
+						<div class="left">{{idea.name}}:</div>
+						<div class="right">
+							<div class="inner" ng-repeat='fangan in idea.items' ng-click='warnDetail(fangan.redirect_url,fangan.queueId)'>
+								<div>{{fangan.title}}</div>
+								<div ng-class="{'othermessage': fangan.redirect_url == ''}"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="middle middle1" ng-if='warnMessage.warning'>
+					<div class="listtitle1" style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+						<div class="headtitle">
+							<div></div>
+							<div>今日健康指导</div>
+							<div></div>
+						</div>
+						<div class="toggleDiv" ng-if='warnMessage.warning.length > 3'>
+							<div class="open" ng-click='slidedown()'>全部</div>
+							<div class="close" ng-click='slideup()'>收起</div>
+						</div>
+					</div>
+					<div class="list1" ng-repeat='list2 in warnMessage.warning' ng-click='warnDetail(list2.redirect_url,list2.queueId)'>
+						<div>
+							<span>{{list2.memo}}</span>
+						</div>
+						<div ng-class="{'othermessage': list2.redirect_url == ''}"></div>
+					</div>
+				</div>
+				<div class="middle middle2" ng-if='warnMessage.service'>
+					<div class="listtitle1" style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
+						<div class="headtitle">
+							<div></div>
+							<div>服务通知</div>
+							<div></div>
+						</div>
+						<div class="toggleDiv" ng-if='warnMessage.service.length > 3'>
+							<div class="open" ng-click='slidedown()'>全部</div>
+							<div class="close" ng-click='slideup()'>收起</div>
+						</div>
+					</div>
+					<div class="list1" ng-repeat='list3 in warnMessage.service' ng-click='warnDetail(list3.redirect_url,list3.queueId)'>
+						<div>
+							<span>{{list3.memo}}</span>
+						</div>
+						<div ng-class="{'othermessage': list3.redirect_url == ''}"></div>
+					</div>
+				</div>
+				<div class="space_warn" ng-if='!warnMessage.warning && !warnMessage.service && !warnMessage.top && warnMessage.clock.length == 0'>
+					<div></div>
+					<p>您已完成今日所有内容</p>
+					<p>距离健康又进了一步</p>
+				</div>
+			</div>
+			<!--非365用户-->
+			<div id="home_warn_no" ng-if='data.user.isActivate == "0"'>
+				<img src="img/noCard/adv_1.png" alt="" />
+				<img src="img/noCard/adv_2.png"" alt="" />
+				<img src="img/noCard/adv_3.png"" alt="" />
+				<img src="img/noCard/adv_4.png"" alt="" />
+                <img src="img/noCard/adv_5.png"" alt="" />
+			</div>
+			<div class="homewarn_slideup" ng-click='warn_slideup()' ng-if='data.user.isActivate == "1"'>
+				
+			</div>
+			<div class="homewarn_slideup2" ng-if='data.user.isActivate == "0"'>
+				<div ng-click='warn_slideup()'>进入首页</div>
+				<div ng-click="go_shop_card()">成为365会员</div>
+			</div>
+		</div>
+		<div id="home_all_alert">
+			<div class="alert_main" ng-class="{'green':onealertdata.style == 'green','health':onealertdata.style == 'health'}" >
+				<p>{{onealertdata.mesg}}</p>
+				<div class="alert_foot">
+					<div class="alert_btn flex">
+						<div class="left" ng-click='alert_cancle(onealertdata.name)'>{{onealertdata.btn_cancel}}</div>
+						<div class="right"  ng-click='alert_sure(onealertdata.url,onealertdata.name)'>{{onealertdata.btn_submit}}</div>
+					</div>
+					<div class="noAlert">
+						<input type="checkbox" id="noAlert" style="display: none;" ng-click='noAlert()'>
+						<label for="noAlert"></label>
+						<span>不再提醒</span>
+					</div>
+				</div>
+			</div>
+		</div>
+</ion-view>

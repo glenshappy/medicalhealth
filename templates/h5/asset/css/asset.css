@@ -1,0 +1,303 @@
+*{margin: 0px;padding:0;box-sizing: border-box;transition: all 0.3s linear}
+body,html{margin: 0;padding:0; background: #FFF; overflow-x: hidden;}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, i, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, fieldset, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, i, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, fieldset, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, i, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, fieldset, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
+}
+body, .ionic-body {
+    -webkit-touch-callout: none;
+    -webkit-font-smoothing: antialiased;
+    font-smoothing: antialiased;
+    -webkit-text-size-adjust: none;
+    -moz-text-size-adjust: none;
+    text-size-adjust: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    word-wrap: break-word;
+    font-size: 14px;
+    font-family: -apple-system;
+    font-family: "-apple-system", "Helvetica Neue", "Roboto", "Segoe UI", sans-serif;
+    line-height: 20px;
+    text-rendering: optimizeLegibility;
+    -webkit-backface-visibility: hidden;
+    -webkit-user-drag: none;
+    -ms-content-zooming: none;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, i, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, fieldset, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
+}
+html {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    font-family: sans-serif;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+}
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, i, u, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, fieldset, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    font: inherit;
+    font-size: 100%;
+}
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+@-webkit-keyframes twinkling{   /*透明度由0到1*/
+    0%{
+        opacity:0.1;                /*透明度为0*/
+    }
+    100%{
+        opacity:1;              /*透明度为1*/
+    }
+}
+@keyframes twinkling{   /*透明度由0到1*/
+    0%{
+        opacity:0.1;                /*透明度为0*/
+    }
+    100%{
+        opacity:1;              /*透明度为1*/
+    }
+}
+a:link{color: #333;text-decoration: none;}
+a:visited{text-decoration: none;color: #333;}
+a:hover{text-decoration:none;color: #333;}
+a:active{text-decoration: none;color: #333;}
+.clearfix:after { content: '\20';  display: block; height: 0; clear: both }
+.clearfix { zoom: 1 }
+#body_content{
+    padding-bottom: 20px;
+}
+.jq_pic{
+ width: 100%;
+    height: 158px;
+    text-align: left;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#body_content>.rang_time{
+ text-align: center;
+ color: #999999;
+ font-size: 13px;
+    margin: 12px 0 10px;
+}
+#body_content>.hours{
+	 padding: 0 36px;
+	 margin-top: 32px;
+}
+#body_content>.hours>div.head{
+    display: flex;
+    justify-content: flex-start;
+}
+#body_content>.hours>div.head>.left{
+	width: 80px;
+	height: 28px;
+	background-color: #0dad63;
+	border-radius: 5px;
+	position: relative;
+	text-align: center;
+	line-height: 28px;
+	color: #FFFFFF;
+	margin-right: 16px;
+}
+#body_content>.hours>div.head>.left>.dotted{
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background-color: #FFFFFF;
+	position: absolute;
+	top: calc(50% - 4px);
+	left: 8px;
+}
+#body_content>.hours>div.head>.right{
+	font-size: 14px;
+	color: #333333;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#body_content>.hours>.img{
+	height: 137px;
+	margin-top: 20px;
+}
+.bodyCount img{
+	width: 100%;
+}
+#body_content>.hours>.body{
+	margin: 0 auto;
+	padding: 20px 0 20px;
+	border-bottom: 1px solid #DCDCDC;
+	font-size: 14px;
+}
+#body_content>.details{
+	padding: 0 36px;
+}
+#body_content>.details>.title_{
+	height: 34px;
+	background: url(../imgs/man1.png) no-repeat center;
+	background-size: 100%;
+	margin: 30px 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#body_content>.details>.title_>p{
+	font-size: 16px;
+	color: #04a067;
+}
+#body_content>.details>.bodyCount{
+	font-size: 14px;
+}
+#body_content>.details>.bodyCount>p{
+	font-size: 14px;
+	margin-bottom: 20px;
+	line-height: 20px;
+}
+#body_content>.details>.bodyCount>p>img{
+	width: 100%;
+}
+.jieqi_yunD span{
+    background-color: #5497f2;
+}
+.hour_img{
+    width: 89%;
+    height: 156px;
+    margin: 0 auto;
+    margin-top: 14px;
+    position: relative;
+    border-radius: 5px;
+}
+.hour_name{
+    width: 126px;
+    color: #FFFFFF;
+    position: absolute;
+    top: 9px;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+}
+.hour_name p:first-child{
+    font-size: 44px;
+    text-align: center;
+    width: 20px;
+    line-height:45px;
+    font-family: monospace;
+}
+.hour_name p:nth-child(2){
+        width: 20px;
+    font-size: 13px;
+    line-height: 15px;
+}
+#body_content>.hour_descri_up{
+	    text-align: left;
+    width: 89%;
+    margin: 0 auto;
+    color: #333333;
+    font-size: 14px;
+    margin-top: 20px;
+    line-height: 20px;
+}
+.hour_descri{
+    width: 90%;
+    height: 60%;
+    margin: 0 auto;
+    color: white;
+    line-height: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.hour_descri .hour_descri_up{
+    font-size: 14px;
+    padding-top: 0;
+    padding-bottom: 12%;
+}
+#body_content>.hour_descri_down{
+    margin-top: 8px;
+}
+.hour_content{
+    width: 90%;
+    margin: 0 auto;
+    line-height: 30px;
+    margin-top: 6%;
+}
+.hour_content>div{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.hour_content>div>.line{
+	width: 32px;
+	height: 1px;
+	background-color: #999999;
+}
+.hour_content>div>.hour_content_tit{
+	font-size: 15px;
+	color: #333333;
+	padding: 0 8px;
+}
+.hour_content>p{
+   text-align: left;
+    color: #333333;
+    font-size: 13px;
+    margin-top: 16px;
+    line-height: 20px;
+}
+.hour_content>.hour_content_img{
+    width: 146px;
+    height: 146px;
+    margin: 0 auto;
+    margin-top: 8px;
+    margin-bottom: 9px;
+}

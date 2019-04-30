@@ -10,13 +10,13 @@ import (
 )
 
 type News struct {
-	title string
-	content string
-	description string
-	url string
-	category_id int
-	created_at string
-	updated_at string
+	Title string
+	Content string
+	Description string
+	Url string
+	Category_id int
+	Created_at string
+	Updated_at string
 }
 var db gorm.DB
 
@@ -27,10 +27,11 @@ func main(){
 		return
 	}
 	defer db.Close()
-
 	route:=gin.Default()
-	route.LoadHTMLGlob("templates/*")
-	route.GET("/index", func(c *gin.Context) {
+	route.Static("/assets","./assets")
+	route.StaticFS("/templates",http.Dir("templates"))
+	route.StaticFile("/favicon.ico","./resources/favicon.ico")
+	route.GET("/index/index", func(c *gin.Context) {
 		Db:=db
 		page,_:=strconv.Atoi(c.DefaultQuery("page","1"))
 		pageSize,_:= strconv.Atoi(c.DefaultQuery("pagesize","10"))
@@ -40,12 +41,10 @@ func main(){
 			log.Fatal(err)
 			return
 		}
-		c.HTML(http.StatusOK,"index.tmpl",gin.H{
+		c.JSON(http.StatusOK,gin.H{
+			"title":"日常养生",
 			"news_list":news,
 		})
-	})
-	route.GET("/redirect1", func(c *gin.Context) {
-		c.Redirect(http.StatusMovedPermanently,"http://www.baidu.com")
 	})
 	route.Run(":8081")
 }
