@@ -1,11 +1,92 @@
-var MEDICAL_HEALTH_lhealth_CONF = {};
+var MEDICAL_HEALTH_CONF = {};
 var SXKUI_DOMAIN = '39.106.127.158:8081';
 var SXKUI_TOKEN  = 'test_token';
+
+// 新首页接口
+var sxk_index = {};
+sxk_index.API = '//127.0.0.1:8081/';
+sxk_index.URL = '//127.0.0.1:8081/templates/';
 
 // 所有接口
 var medical_health_all = {};
 medical_health_all.API = '//trade.suixingkang.com/test/api/';
 medical_health_all.URL = '//trade.suixingkang.com/test/h5/';// Import conf/conf.js // 旧接口
+
+
+// 新首页
+sxk_index.home    = sxk_index.URL+'index.html#/tab/home';
+sxk_index.service = sxk_index.URL+'index.html#/tab/service';
+sxk_index.my      = sxk_index.URL+'index.html#/tab/my';
+sxk_index.show365 = sxk_index.URL+'asset/card365.html';
+sxk_index.searchcard  = sxk_index.URL+'index.html#/searchCard';
+MEDICAL_HEALTH_CONF.index = sxk_index
+
+
+var MEDICAL_HEALTH_AJAX = function(obj) {
+	
+	// 异常处理
+	var _theEcp = new MEDICAL_HEALTH_UI_ECP(obj);
+	
+	// JSON处理
+	this.json = function(url, param, callback, request) {
+		$.ajax({
+	        type: request,
+	        url: url,
+	        async: false,
+	        cache: false,
+	        dataType: "text",
+	        data: param,
+	        headers: {'Sxk-Agent':'sxkui1.1'},
+	        dataType: "json",
+			success: function(data) {
+				if (_theEcp.check(data, url)){
+					callback(data);
+				} 
+			}
+		});
+	}
+	
+	// JSONP处理,访问其他接口
+	this.jsonp = function(url, param, callback, request) {
+		$.ajax({
+	        type: request,
+	        url: url,
+	        async: false,
+	        cache: false,
+	        dataType: "text",
+	        data: param,
+	        headers: {'Sxk-Agent':'sxkui1.1'},
+	        dataType: "jsonp",
+			jsonp:"callback",
+			success: function(data) {
+				if (_theEcp.check(data, url)){
+					callback(data);
+				}
+			}
+		});
+	}
+	
+	// 文件上传 依赖ajaxUPload
+	this.upload = function(url, param, callback) {
+		$.ajaxFileUpload({
+			url: url,
+			type: 'post',
+			secureuri: false,
+			fileElementId: param.fileId,
+			dataType: 'json',
+			data: param,
+			headers: {'Sxk-Agent':'sxkui1.1'},
+			success: function(data, status) {
+				if (_theEcp.check(data, url)){
+					callback(data);
+				}
+			},
+			error: function(data, status, e) {
+				//alert(e);
+			}
+	   });
+	}
+}
 
 var MEDICAL_HEALTH_UI_ENV = function() {
 	// 是不是ANDROID
@@ -42,7 +123,7 @@ var MEDICAL_HEALTH_UI_ENV = function() {
 var MEDICAL_HEALTH_UI_AJAX = function(obj) {
 	
 	// 异常处理
-	var _theEcp = new SXKUI_ECP(obj);
+	var _theEcp = new MEDICAL_HEALTH_UI_ECP(obj);
 	
 	// JSON处理
 	this.json = function(url, param, callback, request) {
@@ -308,7 +389,7 @@ var SXKUI_WAP  = function(config) {
 			var module = indexs[0];
 			var index = indexs[1];
 		}
-		var url = SXKUI_CONF[module][index] || '';
+		var url = MEDICAL_HEALTH_CONF[module][index] || '';
 		return {module:module, url:url, index:index};
 	}
 	
@@ -359,9 +440,9 @@ var SXKUI_WAP  = function(config) {
 	this.activity = function(index) {
 		var data = this.getModule(index);
 		// 如果是WWW跳转
-		if (data.module == 'www' && SXKUI_CONF.www.noproxy.indexOf(data.index) == -1) {
-			//data.url = SXKUI_CONF.www.proxy.replace('{uri}', encodeURIComponent(data.url));
-			data.url = SXKUI_CONF.www.proxy.replace('{uri}', data.url);
+		if (data.module == 'www' && MEDICAL_HEALTH_CONF.www.noproxy.indexOf(data.index) == -1) {
+			//data.url = MEDICAL_HEALTH_CONF.www.proxy.replace('{uri}', encodeURIComponent(data.url));
+			data.url = MEDICAL_HEALTH_CONF.www.proxy.replace('{uri}', data.url);
 		}
 		// 兼容测试模式
 		if (document.domain == 'www.ji.com') {
@@ -404,13 +485,13 @@ var SXKUI_WAP  = function(config) {
 		param.token = this.getToken();
 		var request = param.method || 'POST';
 		delete param.method;
-		var Ajax = new SXKUI_AJAX(this);
+		var Ajax = new MEDICAL_HEALTH_AJAX(this);
 		var actions = action.split('.');
 		if (actions.length == 1) {
 			var url = this.getAPI(action);
 			Ajax.json(url, param, callback, request);
 		} else {
-			var url = SXKUI_CONF[actions[0]]['API'] + actions[1];
+			var url = MEDICAL_HEALTH_CONF[actions[0]]['API'] + actions[1];
 			Ajax.jsonp(url, param, callback, request);
 		}
 	}
@@ -421,7 +502,7 @@ var SXKUI_WAP  = function(config) {
 		var url = this.getAPI(action);
 		param.token = this.getToken();
 		delete param.method;
-		var Ajax = new SXKUI_AJAX(this);
+		var Ajax = new MEDICAL_HEALTH_AJAX(this);
 		Ajax.upload(url, param, callback, request);
 	}
 	
@@ -449,6 +530,8 @@ var SXKUI_WAP  = function(config) {
 		return OBJ;
 	}
 }// Import env/weixin.js // 微信  环境
+
+
 var SXKUI_Weixin = function(config) {
 	
 	// 初始化基类
@@ -518,8 +601,8 @@ var SXKUI_IOS = function(config) {
 		var params = arguments[1] || {};
 		params.token = _this.getToken();
 		
-		if (SXKUI_CONF.IOS[module] && SXKUI_CONF.IOS[module][action]) {
-			SXKUI_CONF.IOS[module][action](index, params, _this);
+		if (MEDICAL_HEALTH_CONF.IOS[module] && MEDICAL_HEALTH_CONF.IOS[module][action]) {
+			MEDICAL_HEALTH_CONF.IOS[module][action](index, params, _this);
 		}else {
 			_parent.activity(index, params);
 		}
@@ -576,8 +659,8 @@ var SXKUI_Android = function(config) {
 		var params = arguments[1] || {};
 		params.token = _this.getToken();
 		
-		if (SXKUI_CONF.Android[module] && SXKUI_CONF.Android[module][action]) {
-			SXKUI_CONF.Android[module][action](index, params, _this);
+		if (MEDICAL_HEALTH_CONF.Android[module] && MEDICAL_HEALTH_CONF.Android[module][action]) {
+			MEDICAL_HEALTH_CONF.Android[module][action](index, params, _this);
 		}else {
 			_parent.activity(index, params);
 		}
@@ -829,16 +912,16 @@ var SXKUI_PLUGIN_weixin = function(){
 		});
 	}
 };// Import sxkui.js // 随行康前端框架 1.0
-var SXKUI = function(module) {
+var MEDICAL_HEALTHUI = function(module) {
 	
 	// 全局配置
 	var options = arguments[1] || {};
-	this.config = $.extend(SXKUI_CONF[module], options);
+	this.config = $.extend(MEDICAL_HEALTH_CONF[module], options);
 	this.config.module = module;
 	
 	
 	// 运行环境判断
-	var env = new SXKUI_ENV();
+	var env = new MEDICAL_HEALTH_UI_ENV();
     if (env.isAndroid()) {
     	this.config.env = 'android';
 		this.obj = new SXKUI_Android(this.config);

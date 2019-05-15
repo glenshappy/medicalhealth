@@ -10,10 +10,10 @@ angular.module('controllers', ["ionic"])
 	})
 	.controller('tabCtrl', function($scope, $state, $ionicLoading, $ionicHistory, $stateParams, $ionicPopup) {
 		$scope.goOut = function() {
-			sxkui.activity('medical.home');
+			medical_healthui.activity('medical.home');
 		}
 		$scope.goRecord = function(){
-			sxkui.activity('user.dangan');
+			medical_healthui.activity('user.dangan');
 		}
 	})
 	.controller('homeCtrl', function($scope, $state, $ionicLoading, $ionicHistory, $stateParams, $ionicPopup, $timeout, $ionicSlideBoxDelegate) {
@@ -27,200 +27,10 @@ angular.module('controllers', ["ionic"])
 				}
 			}
 		//首页数据总接口
-		sxkui.json('index/init', function(data) {
-			$scope.data = data.datas;
-			if($scope.data.weather.warning != null){
-				$('#home>.vip_link>.weather_icon').css('display','block');
-			}
+			medical_healthui.json('index/index', {method:"get"},function(data) {
+			console.log("获取的数据")
+			console.log(data)
 		});
-		sxkui.json('index/tiantiance', function(data) {
-			$scope.daylist = data.datas;
-		});
-		//首屏提醒
-		$scope.seewarn = function(){
-			$('#home_warn').slideDown();
-			$('div.tab-nav.tabs').css('display','none');
-		}
-		$scope.threeAlertDatas = function(){
-			sxkui.json('dialog', function(data) {
-			if(data.datas.length != '0'){
-				$scope.alertDatas = data.datas;
-				$scope.onealertdata = $scope.alertDatas[$scope.alertIndex];
-				$('#home_all_alert').css('display','flex');
-				$('div.tab-nav.tabs').css('display','none');
-			}else{
-				$('#home_all_alert').css('display','none');
-			}
-			});
-		}
-		
-		$scope.warn_slideup = function(){
-			$('#home_warn').slideUp();
-			$('div.tab-nav.tabs').css('display','flex');
-		}
-		//首屏提醒接口
-		sxkui.json('attention', function(data) {
-			$scope.warnMessage = data.datas;
-			if($scope.warnMessage.isShow == '1' && $scope.data.user.isActivate == '1'){
-				if(sessionStorage.getItem('shift')){
-				}else{
-					$('#home_warn').slideDown();
-						$('div.tab-nav.tabs').css('display','none');
-						sessionStorage.setItem('shift','shift');
-				}
-			}
-		});
-		//几大弹框
-		$scope.alertIndex = 0;
-		$scope.threeAlertDatas();
-		window.onpageshow = function(event) {　　
-			if(event.persisted) {　
-				window.location.reload();
-			}
-		};
-		$scope.alertRead = function(name,status,url){
-			sxkui.json('dialog/read', {
-				'name': name,
-				'do':status
-			}, function(data) {
-				if(data.datas.status == 1){
-					if(url){
-						location.href = url;
-					}
-				}
-			});
-		}
-		$scope.alert_cancle = function(name){
-			if ($('input#noAlert').is(':checked')) {
-                $scope.alertRead(name,'close');
-            }else{
-        	 	$scope.alertRead(name,'show');
-            }
-            $scope.alertIndex++;
-            if($scope.alertIndex == $scope.alertDatas.length) {
-				$('#home_all_alert').css('display','none');
-				$('div.tab-nav.tabs').css('display','flex');
-			}
-            $scope.onealertdata = $scope.alertDatas[$scope.alertIndex];
-            $('#home_all_alert>.alert_main>.alert_foot>.noAlert>label').removeClass('default');
-            $('input#noAlert').removeAttr("checked");
-		}
-		$scope.alert_sure = function(url,name){
-			if ($('input#noAlert').is(':checked')) {
-                $scope.alertRead(name,'close',url);
-                $('div.tab-nav.tabs').css('display','flex');
-            }else{
-            	$scope.alertRead(name,'show',url);
-            	$('div.tab-nav.tabs').css('display','flex');
-            }
-		}
-		$scope.noAlert = function(){
-		  	if ($(event.target).is(':checked')) {
-                $(event.target).next('label').addClass('default');
-            } else{
-            	 $(event.target).next('label').removeClass('default');
-            }
-            
-		}
-		if(localStorage.getItem('guided')){
-		}else{
-			$('#guide1').css('display','block');
-			$('div.tab-nav.tabs').css('display','none');
-			localStorage.setItem('guided','guided');
-		}
-		//新手引导
-		$scope.next_guide = function(num){
-			if(num == '1'){
-				$('#guide2').css('display','block').siblings('div').css('display','none');
-			}else if(num == '2'){
-				$('#guide3').css('display','block').siblings('div').css('display','none');
-			}else if(num == '3'){
-				$('#guide3').css('display','none');
-				$('div.tab-nav.tabs').css('display','flex');
-			}
-		}
-		//天天康跳转
-		$scope.dayhealthdetail = function(url) {
-				location.href = url;
-			}
-			//消息提醒详情页
-		$scope.gomessagedetail = function() {
-				$state.go('new_message');
-			}
-			//跳转
-		$scope.goDetail1 = function(url) {
-			location.href = url;
-		}
-		$scope.goLink1 = function(url) {
-			location.href = url;
-		}
-		$scope.goListDetail = function(url) {
-			location.href = url;
-		}
-		$scope.goMore = function() {
-			sxkui.activity('news.main');
-		}
-		$scope.newsDetail1 = function(id) {
-			sxkui.activity('news.detail', {
-				'id': id
-			});
-		}
-		$scope.go_label_list = function(id) {
-				window.event ? window.event.cancelBubble = true : e.stopPropagation();
-				sxkui.activity('news.labels', {
-					'id': id
-				});
-			}
-		//天气详情页
-		$scope.iconDetail = function() {
-			location.href = $scope.data.weather.url;
-		}
-		$scope.warnDetail = function(url,queueId){
-				var $this = $(event.target);
-				if(queueId == 0){
-					location.href = url;
-					return false;
-				}
-				sxkui.json('attention/read', {
-					queueId: queueId
-				}, function(data) {
-					if(data.ret == 0){
-						if(url == ''){
-							$this.parents('.list1').animate({right:"100vw"},800);
-							$timeout(function() {
-								$this.parents('.list1').css('height','0');
-							}, 800);	
-						}else{
-							location.href = url;
-						}
-					}
-				});
-		}
-		$scope.del = function(){
-			var $this = $(event.target);
-			$this.parents('.list1').animate({right:"100vw"},800);
-			$timeout(function() {
-				$this.parents('.list1').css('height','0');
-			}, 800);
-		}
-		$scope.goJieQi = function(url){
-			location.href = url;
-		}
-		$scope.go_shop_card = function(){
-			sxkui.activity('index.show365');
-		}
-		//首屏提醒展开收起
-		$scope.slidedown = function(){
-			$(event.target).parents('.middle').css('height','auto');
-			$(event.target).parents('.middle').css('max-height','none');
-			$(event.target).css('display','none');
-			$(event.target).siblings('.close').css('display','block');
-		}
-		$scope.slideup = function(){
-			$(event.target).parents('.middle').css('max-height','174px');
-			$(event.target).css('display','none');
-			$(event.target).siblings('.open').css('display','block');
-		}
 		})
 	})
 	.controller('myCtrl', function($scope, $state, $ionicLoading, $ionicHistory, $stateParams, $ionicPopup) {

@@ -3,4 +3,4 @@
 ////	'API': 'http://www.baidu.com',
 ////	'URL': 'http://www.baidu.com'
 //};
-var sxkui = new SXKUI('index');
+var medical_healthui = new MEDICAL_HEALTHUI('index');

@@ -10,13 +10,13 @@ import (
 )
 
 type News struct {
-	Title string
-	Content string
-	Description string
-	Url string
-	Category_id int
-	Created_at string
-	Updated_at string
+	Title string `json:"title"`
+	Content string	`json:"content"`
+	Description string	`json:"description"`
+	Url string `json:"url"`
+	Category_id int	`json:"category_id"`
+	Created_at string	`json:"created_at"`
+	Updated_at string	`json:"updated_at"`
 }
 var db gorm.DB
 
