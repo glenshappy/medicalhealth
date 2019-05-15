@@ -10,10 +10,10 @@ angular.module('controllers', ["ionic"])
 	})
 	.controller('tabCtrl', function($scope, $state, $ionicLoading, $ionicHistory, $stateParams, $ionicPopup) {
 		$scope.goOut = function() {
-			sxkui.activity('medical.home');
+			medical_healthui.activity('medical.home');
 		}
 		$scope.goRecord = function(){
-			sxkui.activity('user.dangan');
+			medical_healthui.activity('user.dangan');
 		}
 	})
 	.controller('homeCtrl', function($scope, $state, $ionicLoading, $ionicHistory, $stateParams, $ionicPopup, $timeout, $ionicSlideBoxDelegate) {
@@ -27,7 +27,7 @@ angular.module('controllers', ["ionic"])
 				}
 			}
 		//首页数据总接口
-		MEDICAL_HEALTH_UI_AJAX.json('index/index', function(data) {
+			medical_healthui.json('index/index', {method:"get"},function(data) {
 			console.log("获取的数据")
 			console.log(data)
 		});

@@ -2,10 +2,25 @@ var MEDICAL_HEALTH_CONF = {};
 var SXKUI_DOMAIN = '39.106.127.158:8081';
 var SXKUI_TOKEN  = 'test_token';
 
+// 新首页接口
+var sxk_index = {};
+sxk_index.API = '//127.0.0.1:8081/';
+sxk_index.URL = '//127.0.0.1:8081/templates/';
+
 // 所有接口
 var medical_health_all = {};
 medical_health_all.API = '//trade.suixingkang.com/test/api/';
 medical_health_all.URL = '//trade.suixingkang.com/test/h5/';// Import conf/conf.js // 旧接口
+
+
+// 新首页
+sxk_index.home    = sxk_index.URL+'index.html#/tab/home';
+sxk_index.service = sxk_index.URL+'index.html#/tab/service';
+sxk_index.my      = sxk_index.URL+'index.html#/tab/my';
+sxk_index.show365 = sxk_index.URL+'asset/card365.html';
+sxk_index.searchcard  = sxk_index.URL+'index.html#/searchCard';
+MEDICAL_HEALTH_CONF.index = sxk_index
+
 
 var MEDICAL_HEALTH_AJAX = function(obj) {
 	
@@ -515,6 +530,8 @@ var SXKUI_WAP  = function(config) {
 		return OBJ;
 	}
 }// Import env/weixin.js // 微信  环境
+
+
 var SXKUI_Weixin = function(config) {
 	
 	// 初始化基类
@@ -895,7 +912,7 @@ var SXKUI_PLUGIN_weixin = function(){
 		});
 	}
 };// Import sxkui.js // 随行康前端框架 1.0
-var SXKUI = function(module) {
+var MEDICAL_HEALTHUI = function(module) {
 	
 	// 全局配置
 	var options = arguments[1] || {};
