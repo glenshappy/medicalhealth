@@ -4,8 +4,8 @@ var SXKUI_TOKEN  = 'test_token';
 
 // 新首页接口
 var sxk_index = {};
-sxk_index.API = '//127.0.0.1:8081/';
-sxk_index.URL = '//127.0.0.1:8081/templates/';
+sxk_index.API = '//39.106.127.158:8081/';
+sxk_index.URL = '//39.106.127.158:8081/templates/';
 
 // 所有接口
 var medical_health_all = {};
