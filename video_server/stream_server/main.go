@@ -1,16 +1,13 @@
 package main
 
 import (
-	"net/http"
 	"github.com/julienschmidt/httprouter"
-)
-
-var(
-	cl ConnLimiter
+	"net/http"
 )
 
 type middleWareHandler struct {
 	r *httprouter.Router
+	l *ConnLimiter
 }
 
 func RegisterHandlers() *httprouter.Router{
@@ -21,25 +18,25 @@ func RegisterHandlers() *httprouter.Router{
 	return router
 }
 
-func NewMiddleWareHandler()  middleWareHandler {
+func NewMiddleWareHandler(connCon int)  middleWareHandler {
 	mh:=middleWareHandler{}
 	mh.r = RegisterHandlers()
+	mh.l = NewConnLimiter(connCon)
 	return mh
 }
 
 func (m middleWareHandler) ServeHTTP(w http.ResponseWriter, r *http.Request){
 	//实现限流
-	rs:=cl.GetConn()
-	if(rs!=true){
+	if !m.l.GetConn() {
 		sendErroMsg(w,http.StatusTooManyRequests,"too many requests")
 		return
 	}
 	m.r.ServeHTTP(w,r)
-	defer cl.ReleaseConn()
+	defer m.l.ReleaseConn()
 }
 
 func main() {
-	cl=NewConnLimiter(2)
-	mh:=NewMiddleWareHandler()
+	//fmt.Printf("长度：%d==========\n",utf8.RuneCountInString("忍者s你"))
+	mh:=NewMiddleWareHandler(2)
 	http.ListenAndServe(":8081", mh)
 }
