@@ -16,3 +16,7 @@ type Comment struct {
 
 type ListComments []Comment
 
+type SimpleSession struct {
+	Username string //login name
+	TTL int64
+}
