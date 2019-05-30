@@ -1,0 +1,42 @@
+<ion-view title="登录">
+	<ion-content>
+		<div id="login">
+			<div class="main">
+				<div class="img">
+					<div style="margin-top: 0;"></div>
+				</div>
+				<div>
+					<div class="first">
+						<img src="img/pho.png" alt="" style="height: 20px;" />
+						<input class="win_login" style="width: 70%;" type="number" id="sjh" ng-keyup="geetestTel('#btnSendCode', 'user_reg')" oninput="if(value.length>11)value=value.slice(0,11)" placeholder="请输入手机号" />
+					</div>
+					<div class="first second">
+						<img src="img/pass.png" alt="" />
+						<input class="win_login" type="number" name="" id="yzm" value="" placeholder="请输入验证码" />
+						<button id="btnSendCode" class="geeBtn">获取验证码</button>
+					</div>
+					<p class="word nineGray">登录表示您已同意《<span ng-click='goXieYi()' class="agreement">随行康平台用户登录协议</span>》</p>
+					<div class="first third" ng-click="Login()">
+						登录
+					</div>
+				</div>
+			</div>
+			<div class="dibu">
+				<div class="footer">
+					<div></div>
+					<div class="mid nineGray">或</div>
+					<div></div>
+				</div>
+				<p class="end" ng-click="otherLogin()">激活码登录</p>
+			</div>
+		</div>
+	</ion-content>
+
+</ion-view>
+<div class="alert">输入的内容不正确</div>
+<div class="xieyi">
+	<div class="inner" id="login_inner">
+		
+	</div>
+	<div class="close" ng-click="close()"></div>
+</div>

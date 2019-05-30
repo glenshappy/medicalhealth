@@ -32,6 +32,16 @@ angular.module('myApp', ['ionic', 'controllers', 'ui.router'])
 
 	// $urlRouterProvider.otherwise('/tab/home');
 
+	$stateProvider.state('login',{
+		url: '/login',
+		views: {
+			"order": {
+				templateUrl: 'templates/login.html'
+				//      controller:'homeCtrl'
+			}
+		}
+	})
+
 	$stateProvider.state('tab', {
 		url: '/tab',
 		templateUrl: 'templates/tabs.html',

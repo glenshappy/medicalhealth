@@ -7,6 +7,11 @@ var sxk_index = {};
 sxk_index.API = '//39.106.127.158:8081/';
 sxk_index.URL = '//39.106.127.158:8081/templates/';
 
+// 用户接口
+var sxk_video = {};
+sxk_video.API = '//localhost:8080/';
+sxk_video.URL = '//localhost:8080/templates/';
+
 // 所有接口
 var medical_health_all = {};
 medical_health_all.API = '//trade.suixingkang.com/test/api/';
@@ -911,15 +916,13 @@ var SXKUI_PLUGIN_weixin = function(){
 			});
 		});
 	}
-};// Import sxkui.js // 随行康前端框架 1.0
+};// Import sxkui.js // 前端框架 1.0
 var MEDICAL_HEALTHUI = function(module) {
-	
 	// 全局配置
 	var options = arguments[1] || {};
 	this.config = $.extend(MEDICAL_HEALTH_CONF[module], options);
 	this.config.module = module;
-	
-	
+
 	// 运行环境判断
 	var env = new MEDICAL_HEALTH_UI_ENV();
     if (env.isAndroid()) {

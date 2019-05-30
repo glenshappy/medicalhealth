@@ -35,9 +35,12 @@ angular.module('controllers', ["ionic"])
 	})
 	.controller('myCtrl', function($scope, $state, $ionicLoading, $ionicHistory, $stateParams, $ionicPopup) {
 		//用户信息
-		sxkui.json('user/info', function(data) {
+		medical_healthui_video.json('user/info', function(data) {
 			$scope.data = data.datas;
 		});
+		$scope.goLogin = function(){
+			$state.go('login')
+		}
 		$scope.goLink1 = function() {
 			$state.go('searchCard')
 		}

@@ -63,6 +63,10 @@ func GetVideo(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
 	io.WriteString(w,string(dataStr))
 }
 
+func GetUserInfo(sid string)  {
+	
+}
+
 func CreateComment(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
 
 }

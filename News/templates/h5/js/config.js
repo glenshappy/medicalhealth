@@ -4,3 +4,4 @@
 ////	'URL': 'http://www.baidu.com'
 //};
 var medical_healthui = new MEDICAL_HEALTHUI('index');
+var medical_healthui_video = new MEDICAL_HEALTHUI('video');

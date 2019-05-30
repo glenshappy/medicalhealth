@@ -26,3 +26,11 @@ type  ReponseMsg struct {
 	Msg string `json:"msg"`
 	Data map[string]interface{} `json:"data"`
 }
+
+type User struct {
+	Id int32 `json:"id"`
+	LoginName string `json:"login_name"`
+	Pwd string `json:"pwd"`
+	Nickname string `json:"nickname"`
+	Photo string `json:"photo"`
+}
