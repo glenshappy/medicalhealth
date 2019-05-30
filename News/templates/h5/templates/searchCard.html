@@ -1,0 +1,63 @@
+<ion-view title="查询健康卡"> 
+	<ion-content style='margin-bottom: 50px;'>
+		<div id="search_card">
+			<div class="top">
+				<div class="header">
+					<!--ng-blur='checkInput()'-->
+					卡号<input type="number" placeholder="请输入要查询的卡号（6 位）" />
+					<div class="newBtn" id="search_btn" ng-click='search()'>
+						<p>查询</p>
+					</div>
+				</div>
+				<div class="data" ng-if='data.canactiv == "1" || data.canactiv == "0"'>
+					<div class="flex " ng-if='data.name'>
+						<p>卡类型</p>
+						<p>{{data.name}}</p>
+					</div>
+					<div class="flex " ng-if='data.status'>
+						<p class="nineGray">状态</p>
+						<p style="color: #04A067;">{{data.status}}</p>
+					</div>
+					<div class="flex" ng-if='data.time'>
+						<p class="nineGray">截止激活日期</p>
+						<p>{{data.time}}</p>
+					</div>
+					<div class="flex" ng-if='data.days'>
+						<p class="nineGray">有效期</p>
+						<p>{{data.days}}日</p>
+					</div>
+				</div>
+				<div class="card_detail" ng-click='hideDetail()' ng-if='data.canactiv == "1" || data.canactiv == "0"'>
+					<div class="title_card">{{data.detail.base.title}}</div>
+					<div class="service_card">
+						<div class="left">
+							<p>服务内容</p>
+							<p>服务时限</p>
+						</div>
+						<div class="right">
+							<ul>
+								<li ng-repeat='item in data.detail.base.items'>{{item.name}}</li>
+							</ul>
+							<p>{{data.detail.days}}</p>
+						</div>
+					</div>
+					<div class="send_card">
+						<div>
+							<p>{{data.detail.give.title}}</p>
+							<p>数量</p>
+						</div>
+						<div ng-repeat='item1 in data.detail.give.items'>
+							<p>{{item1.name}}</p>
+							<p>{{item1.value}}</p>
+						</div>
+					</div>
+				</div>
+				<p style="display: none;margin: 38px 0 0 0;font-size: 15px;" class="nineGray">未查询到此卡，请核实卡号是否正确</p>
+			</div>
+		</div>
+		<div class="alertOther">正确的卡号为6位数字</div>
+	</ion-content>
+	<div class="bar bar-footer" id="card_live" ng-if='data.canactiv == "1"' ng-click='goLiving()'>
+		<p>激活</p>
+	</div>
+</ion-view>

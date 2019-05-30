@@ -1,0 +1,1 @@
+function IsPC(){for(var i=navigator.userAgent,n=new Array("Android","iPhone","SymbianOS","Windows Phone","iPad","iPod"),e=!0,o=0;o<n.length;o++)if(i.indexOf(n[o])>0){e=!1;break}return e}var is_pc=IsPC();0==is_pc&&(location.href="/mobile/homepage");

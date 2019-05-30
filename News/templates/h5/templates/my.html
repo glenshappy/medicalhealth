@@ -1,0 +1,39 @@
+<ion-view>
+	<ion-content>
+		<div id="my">
+			<div class="header">
+				<div class="left">
+					<div ng-style="{'background': 'url('+ data.face + ') no-repeat  center','background-size': '100%'}" ng-click='goUserModify()'></div>
+					<div>
+						<span ng-if='data.isActivate == "1"' class="isActive" ng-click='go_showcard()'></span>
+						<span ng-if='data.isActivate == "0"' class="noActive" ng-click='go_showcard()'></span>
+						<p>登录</p>
+					</div>
+				</div>
+				<div class="right" ng-click='edit_new()'></div>
+				<div class="right message" ng-click='messageList()'>
+					<span ng-if='messNum != "0"'></span>
+				</div>
+			</div>
+			<div class="my_to" ng-if='data.isActivate == "0"' ng-click='go_shop_card()'>
+				
+			</div>
+			<div class="mesageCount">
+				<div class="flex list Aaa_bottom_thinline" ng-click='help()'>
+					<div class="flex left">
+						<img src="img/optimizemgs/new13.png" alt="" />
+						<p>帮助中心</p>
+					</div>
+					<div class="right"></div>
+				</div>
+				<div class="flex list Aaa_bottom_thinline" ng-click='report()'>
+					<div class="flex left">
+						<img src="img/optimizemgs/new14.png" alt="" />
+						<p>意见反馈</p>
+					</div>
+					<div class="right"></div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

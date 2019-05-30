@@ -1,0 +1,15 @@
+<ion-view title="服务购买">
+	<ion-content>
+		<div id="service">
+			<div class="serviceList flex" ng-repeat='shop in data' ng-click='shopDetail(shop.buy)'>
+				<div ng-style="{'background': 'url('+ shop.img + ') no-repeat  center','background-size': '100%'}"></div>
+				<div>
+					<h5>{{shop.goods_name}}</h5>
+					<p class="nineGray">{{shop.summary}}</p>
+					<!-- <p class="nineGray">￥ {{shop.sale_price}}</p> -->
+					<p class="nineGray">{{shop.ad_label}}</p>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,32 @@
+<ion-view title='消息'>
+	<ion-content class='contentBg'>
+		<div id="messageList">
+			<div class="messageList" ng-repeat='list in messageLists' ng-click='goDetail(list.id)'>
+				<ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+					<ion-item class="item-remove-animate" style='border-top: none;border-bottom: 1px solid #DDDDDD;'>
+						<div class="message_title">
+							<div class="left" ng-class='{"noRead":list.is_read == "0"}'></div>
+							<div class="right">
+								<p>{{list.title}} <span ng-if='list.is_read == "0"'></span></p>
+							</div>
+						</div>
+						<p class="messTitle">{{list.time}}</p>
+						<div class="message_content">
+							<p>{{list.summary}}</p>
+						</div>
+						<ion-option-button class="button-assertive" ng-click="onItemDelete(list.id,$index)">
+							删除
+						</ion-option-button>
+					</ion-item>
+				</ion-list>
+			</div>
+			<div class="space_message" ng-if='messageLists.length == "0"'>
+				<div></div>
+				<p class="nineGray">没有消息</p>
+			</div>
+		</div>
+		<div class="noMore" ng-if="moredata=='false' || messageLists.length != 0" style="text-align: center;margin:7% 0;color: #09b768;">没有更多了~</div>
+		<ion-infinite-scroll ng-if="moredata" immediate-check="false" on-infinite="loadMore()" distance="5%">
+		</ion-infinite-scroll>
+	</ion-content>
+</ion-view>

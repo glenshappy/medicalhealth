@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+    <link rel="stylesheet" href="css/asset.css" />
+</head>
+<body>
+</body>
+<!-- 模板 -->
+<script id="container"  type="text/html">
+<div id="body_content">
+    	<div class="hour_img" style="background: url({{banner}}) no-repeat center;background-size: cover;">
+    		<div class="hour_name">
+	            <p>{{hour_name}}</p>
+	            <p>{{health_principle}}</p>
+       		 </div>
+    	</div>
+        <p class="hour_descri_up"></p>
+         <p class="hour_descri_up hour_descri_down"></p>
+      	{{if health_memo&&health_img}}
+        <div class="hour_content">
+        	<div>
+        		<div class="line"></div>
+	            <p class="hour_content_tit">调理</p>
+	        	<div class="line"></div>
+        	</div>
+        	 {{if health_img}}
+            <div class="hour_content_img" style="background: url({{health_img}}) no-repeat center;background-size: cover;"></div>
+             {{/if}}
+          	{{if health_memo}}
+            <p>{{health_memo}}</p>
+            {{/if}}
+        </div>
+         {{/if}}
+</div>
+</script>
+<!-- 模板 -->
+<script src="//config.suixingkang.com/js/jquery/jquery-3.3.3.min.js"></script>
+<script src="//config.suixingkang.com/js/sxkui/sxkui-test-1.0.js"></script>
+<script src="//config.suixingkang.com/js/lib/template-web.js"></script>
+<script>
+	var sxkui = new SXKUI('index');
+    var param = {
+    	hourId: sxkui.getQuery('id'),
+        type: sxkui.getQuery('type'),
+    }
+    sxkui.json('time/hourinfo', param, function(data){
+		console.log(data.datas)
+        var memo=data.datas.memo;
+        var html = template('container', data.datas);
+		$('body').html(html);
+        var memo_one=memo.split("&&");
+        $(".hour_descri_up").html(memo_one[0]);
+        $(".hour_descri_down").html(memo_one[1]);
+        sxkui.setTitle(data.datas.hour_name);
+	});
+</script>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title>365套餐内容</title>
+    <link rel="stylesheet" href="css/card365.css" />
+</head>
+<body>
+	
+	
+<!-- 打电话 -->	
+<div class="dialog">
+	<div class="confirm">
+		<div>确认拨打电话：4009215898</div>
+		<div>
+			<div onclick="cancle()">取消</div>
+			<a href="tel:4009215898" style="">拨打</a>
+		</div>
+	</div>
+</div>
+</body>
+<!-- 模板 -->
+<script id="container"  type="text/html">
+<div class="card365">
+	<div class="imgs">
+	    <img src="imgs/0.png" />
+		<img src="imgs/1.png" />
+		<img src="imgs/2.png" />
+		<img src="imgs/3.png" />
+		<img src="imgs/4.png" />
+		<img src="imgs/5.png" />
+		<img src="imgs/6.png" />
+	</div>
+	<div class="fixed" style="position: fixed;bottom: 0;background-color: white;">
+		<div onclick="call()"></div>
+		<div onclick="wait('{{goods.buyurl}}')">
+			<div>
+				{{if isvip == '1'}} 立即续订 {{else}} 立即购买 {{/if}}
+				(￥<span>{{goods.sale_price}}</span>)
+			</div>
+		</div>
+	</div>
+</div>
+
+</script>
+<!-- 模板 -->
+<script src="//config.suixingkang.com/js/jquery/jquery-3.3.3.min.js"></script>
+<script src="//config.suixingkang.com/js/sxkui/sxkui-test-1.0.js"></script>
+<script src="//config.suixingkang.com/js/lib/template-web.js"></script>
+<script>
+	var sxkui = new SXKUI('index');
+	sxkui.setTitle("365套餐内容");
+    sxkui.json('card/vip', function(data){
+        var html = template('container', data.datas);
+		$('body').prepend(html);
+	});
+	
+	// 打电话
+	var call = function() {
+		$('.dialog').show();
+	}
+	// 取消息
+	var cancle = function() {
+		$('.dialog').hide();
+	}
+	// 购买
+	var wait = function(url) {
+		var token = sxkui.getToken();
+		var url = sxk_trade.API + 'postcart?token='+token;
+		$.getJSON(url, {goods_id:378, spec_id:1, count:1}, function(data) {
+			if (data.code == 200) {
+				//sxkui.characterDataOldValue('deposit')
+				sxkui.activity('trade.deposit', {cartId:data.data.cart_id});
+			}
+		})
+	}
+</script>
+</html>

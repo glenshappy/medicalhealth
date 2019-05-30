@@ -20,3 +20,9 @@ type SimpleSession struct {
 	Username string //login name
 	TTL int64
 }
+
+type  ReponseMsg struct {
+	Code int32 `json:"code"`
+	Msg string `json:"msg"`
+	Data map[string]interface{} `json:"data"`
+}
