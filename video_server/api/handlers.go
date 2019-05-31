@@ -63,8 +63,31 @@ func GetVideo(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
 	io.WriteString(w,string(dataStr))
 }
 
-func GetUserInfo(sid string)  {
-	
+func GetUserInfo(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
+	var loginName string
+	sid:= r.FormValue("sid")
+	loginName,err1:=sessions.IsSessionExpired(sid)
+	if err1==true {
+		defs.SendJsonMsg(w,http.StatusInternalServerError,map[string]interface{}{
+			"code":http.StatusInternalServerError,
+			"msg":"session已经过期了",
+		})
+		return
+	}
+
+	userInfo,err:=dbops.GetUserInfo(loginName)
+	if err!=nil {
+		defs.SendJsonMsg(w,http.StatusInternalServerError,map[string]interface{}{
+			"code":http.StatusInternalServerError,
+			"msg":"内部错误",
+		})
+		return
+	}
+	defs.SendJsonMsg(w,http.StatusOK,map[string]interface{}{
+		"code":http.StatusOK,
+		"msg":"成功",
+		"userinfo":userInfo,
+	})
 }
 
 func CreateComment(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {

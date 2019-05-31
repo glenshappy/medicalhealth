@@ -64,7 +64,6 @@ func IsSessionExpired(sid string) (string, bool) {
 			deleteExpiredSession(sid)
 			return "", true
 		}
-
 		return ss.(*defs.SimpleSession).Username, false
 	} else {
 		ss, err := dbops.RetrieveSession(sid)
