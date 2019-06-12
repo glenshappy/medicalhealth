@@ -2,23 +2,33 @@ package taskrunner
 
 import (
 	"errors"
+	"fmt"
 	"log"
-	"sync"
 	"medicalhealth/video_server/scheduler/dbops"
-	"medicalhealth/video_server/scheduler/ossops"
+	"sync"
 )
 
+func init()  {
+	fmt.Println("taskrunner 包中的第二个init")
+}
+
+func TestPack1()  {
+	fmt.Println("测试包引入")
+}
+
 func deleteVideo(vid string) error {
-	ossfn := "videos/" + vid
-	bn := "avenssi-videos2"
-	ok := ossops.DeleteObject(ossfn, bn)
-
-	if !ok {
-		log.Printf("Deleting video error, oss operation failed")
-		return errors.New("Deleting video error")
-	}
-
+	fmt.Printf("delete success:%s\n",vid)
 	return nil
+	//ossfn := "videos/" + vid
+	//bn := "avenssi-videos2"
+	//ok := ossops.DeleteObject(ossfn, bn)
+	//
+	//if !ok {
+	//	log.Printf("Deleting video error, oss operation failed")
+	//	return errors.New("Deleting video error")
+	//}
+	//
+	//return nil
 }
 
 func VideoClearDispatcher(dc dataChan) error {

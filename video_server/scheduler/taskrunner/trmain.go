@@ -1,6 +1,7 @@
 package taskrunner
 
 import (
+	"fmt"
 	"time"
 	//"log"
 )
@@ -21,6 +22,7 @@ func (w *Worker) startWorker() {
 	for {
 		select {
 		case <- w.ticker.C:
+			fmt.Println("每隔3秒tick一次",time.Now().String())
 			go w.runner.StartAll()
 		}
 	}

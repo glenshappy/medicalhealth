@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 	"github.com/julienschmidt/httprouter"
-	"github.com/avenssi/video_server/scheduler/dbops"
+	"medicalhealth/video_server/scheduler/dbops"
 )
 
 func vidDelRecHandler(w http.ResponseWriter, r *http.Request, p httprouter.Params){
@@ -20,6 +20,6 @@ func vidDelRecHandler(w http.ResponseWriter, r *http.Request, p httprouter.Param
 		return
 	}
 
-	sendResponse(w, 200, "")
+	sendResponse(w, 200, "删除成功")
 	return
 }

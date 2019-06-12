@@ -2,6 +2,7 @@ package dbops
 
 import (
 	"database/sql"
+	"fmt"
 	_ "github.com/go-sql-driver/mysql"
 )
 
@@ -11,7 +12,8 @@ var (
 )
 
 func init() {
-	dbConn, err = sql.Open("mysql", "root:123!@#@tcp(localhost:3306)/video_server?charset=utf8")
+	dbConn, err = sql.Open("mysql", "root:root@tcp(39.106.127.158:3306)/medicalhealth?charset=utf8")
+	fmt.Println("数据库连接了一次")
 	if err != nil {
 		panic(err.Error())
 	}

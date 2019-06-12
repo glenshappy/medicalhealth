@@ -1,9 +1,11 @@
-package ossops 
+package ossops
 
 import (
+	"fmt"
 	"log"
 	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"avenssi/config"
+	_ "medicalhealth/video_server/scheduler/dbops"
 )
 
 var EP string
@@ -14,6 +16,7 @@ func init() {
 	AK = ""
 	SK = ""
 	EP = config.GetOssAddr()
+	fmt.Println("init in ossops")
 }
 
 func UploadToOss(filename string, path string, bn string) bool {
