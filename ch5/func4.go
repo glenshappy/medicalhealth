@@ -5,39 +5,38 @@ import (
 )
 
 type bailout struct {
-
 }
 
-func hehe4()  {
+func hehe4() {
 	panic(10)
 }
 
-func hehe3(name string)  (err error){
+func hehe3(name string) (err error) {
 	defer func() {
-		p:=recover()
+		p := recover()
 		switch p {
 		case nil:
-		case bailout {}:
-			err=fmt.Errorf("multibile error:%v",p)
+		case bailout{}:
+			err = fmt.Errorf("multibile error:%v", p)
 		default:
 			panic(p)
 		}
 	}()
 
 	switch name {
-	case  "wanjn":
+	case "wanjn":
 		fmt.Println("nothing")
 	default:
 		panic(bailout{})
 	}
-	err=nil
+	err = nil
 	return
 }
 
-func main()  {
+func main() {
 	defer func() {
-		p:=recover()
-		if(p!=nil){
+		p := recover()
+		if p != nil {
 			fmt.Println("======")
 			fmt.Println(p)
 			fmt.Println("==========")

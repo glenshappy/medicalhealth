@@ -1,9 +1,9 @@
-package main 
+package main
 
 import (
-	"net/http"
 	"github.com/julienschmidt/httprouter"
 	"medicalhealth/video_server/scheduler/taskrunner"
+	"net/http"
 )
 
 func RegisterHandlers() *httprouter.Router {

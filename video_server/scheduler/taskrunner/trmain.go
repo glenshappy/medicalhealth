@@ -12,7 +12,7 @@ type Worker struct {
 }
 
 func NewWorker(interval time.Duration, r *Runner) *Worker {
-	return &Worker {
+	return &Worker{
 		ticker: time.NewTicker(interval * time.Second),
 		runner: r,
 	}
@@ -21,8 +21,8 @@ func NewWorker(interval time.Duration, r *Runner) *Worker {
 func (w *Worker) startWorker() {
 	for {
 		select {
-		case <- w.ticker.C:
-			fmt.Println("每隔3秒tick一次",time.Now().String())
+		case <-w.ticker.C:
+			fmt.Println("每隔3秒tick一次", time.Now().String())
 			go w.runner.StartAll()
 		}
 	}
@@ -34,5 +34,3 @@ func Start() {
 	w := NewWorker(3, r)
 	go w.startWorker()
 }
-
-

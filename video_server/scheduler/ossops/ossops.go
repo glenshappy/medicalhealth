@@ -1,10 +1,10 @@
 package ossops
 
 import (
-	"fmt"
-	"log"
-	"github.com/aliyun/aliyun-oss-go-sdk/oss"
 	"avenssi/config"
+	"fmt"
+	"github.com/aliyun/aliyun-oss-go-sdk/oss"
+	"log"
 	_ "medicalhealth/video_server/scheduler/dbops"
 )
 
@@ -62,5 +62,3 @@ func DeleteObject(filename string, bn string) bool {
 
 	return true
 }
-
-

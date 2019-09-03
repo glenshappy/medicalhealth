@@ -7,15 +7,15 @@ import (
 
 //返回接受的信息，小写转成大写字母
 func replyConn(c net.Conn) error {
-	data,err:= pools.Read(c)
-	if err!=nil{
+	data, err := pools.Read(c)
+	if err != nil {
 		return err
 	}
-	err= pools.Write(c,[]byte(strings.ToUpper(string(data))))
+	err = pools.Write(c, []byte(strings.ToUpper(string(data))))
 	return err
 }
 
-func main()  {
+func main() {
 	ln, err := net.Listen("tcp", "127.0.0.1:8972")
 	if err != nil {
 		panic(err)

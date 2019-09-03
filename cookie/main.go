@@ -1,4 +1,5 @@
 package cookie
+
 import (
 	"fmt"
 
@@ -11,7 +12,7 @@ func main() {
 
 	router.GET("/cookie", func(c *gin.Context) {
 		cookie, err := c.Cookie("gin_cookie")
-		if err != nil{
+		if err != nil {
 			fmt.Println("=============")
 			fmt.Println(err)
 			fmt.Println("=============")

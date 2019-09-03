@@ -1,8 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"bufio"
+	"fmt"
 	"golang.org/x/net/html"
 	"io"
 	"io/ioutil"
@@ -14,13 +14,14 @@ import (
 )
 
 type Node struct {
-	Type NodeType
-	Data string
-	Attr []Attribute
+	Type                    NodeType
+	Data                    string
+	Attr                    []Attribute
 	FirstChild, NextSibling *Node
 }
 
 type NodeType int32
+
 const (
 	ErrorNode NodeType = iota
 	TextNode
@@ -29,39 +30,40 @@ const (
 	CommentNode
 	DoctypeNode
 )
+
 type Attribute struct {
 	Key, Val string
 }
 
-func findLinks(url string)  ([]string ,error){
+func findLinks(url string) ([]string, error) {
 	var links []string
-	resp,err:=http.Get(url)
-	if err!=nil {
-		return nil,err
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
 	}
-	doc,err:=html.Parse(resp.Body)
+	doc, err := html.Parse(resp.Body)
 	resp.Body.Close()
-	if err!=nil {
-		return nil,fmt.Errorf("parsing %s as HTML:%s",url,err)
+	if err != nil {
+		return nil, fmt.Errorf("parsing %s as HTML:%s", url, err)
 	}
-	links = visit(nil,doc)
-	return links,nil
+	links = visit(nil, doc)
+	return links, nil
 }
 
-func waitForServer(url string)  error{
-	const timeout  = 1*time.Second
-	deadline:=time.Now().Add(timeout)
+func waitForServer(url string) error {
+	const timeout = 1 * time.Second
+	deadline := time.Now().Add(timeout)
 	fmt.Println(deadline)
-	for tries:=0;time.Now().Before(deadline);tries++ {
-		_,err:=http.Head(url)
-		if err==nil {
+	for tries := 0; time.Now().Before(deadline); tries++ {
+		_, err := http.Head(url)
+		if err == nil {
 			return nil
 		}
-		interval:=time.Second<<uint(tries)
-		fmt.Println("睡眠%s秒",interval)
+		interval := time.Second << uint(tries)
+		fmt.Println("睡眠%s秒", interval)
 		time.Sleep(interval)
 	}
-	return fmt.Errorf("response errror:%s after %s minutes",url,timeout)
+	return fmt.Errorf("response errror:%s after %s minutes", url, timeout)
 }
 
 func NetWorkStatus() error {
@@ -70,34 +72,34 @@ func NetWorkStatus() error {
 	err := cmd.Run()
 	fmt.Println("NetWorkStatus End  :", time.Now().Unix())
 	if err != nil {
-		log.Printf("network error:%v",err)
+		log.Printf("network error:%v", err)
 		return err
 	}
 	return nil
 }
 
-func createTempDir(prefix string)  (string,error){
-	dir,err:=ioutil.TempDir("",prefix)
-	if err!=nil {
-		return "",fmt.Errorf("failed to create temp dir:%v",err)
+func createTempDir(prefix string) (string, error) {
+	dir, err := ioutil.TempDir("", prefix)
+	if err != nil {
+		return "", fmt.Errorf("failed to create temp dir:%v", err)
 	}
-	return dir,nil
+	return dir, nil
 }
 
 func main() {
-	reader:=bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 	for {
-		r,_,err:=reader.ReadRune()
-		if err==io.EOF {
+		r, _, err := reader.ReadRune()
+		if err == io.EOF {
 			break
 		}
-		if err!=nil {
+		if err != nil {
 			log.Fatal(err)
 		}
-		if r=='\r' {
+		if r == '\r' {
 			fmt.Println("回车符")
 		}
-		if r=='\n' {
+		if r == '\n' {
 			fmt.Println("换行符")
 		}
 		fmt.Println(string(r))

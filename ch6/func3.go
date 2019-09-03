@@ -7,25 +7,25 @@ import (
 
 type P int
 
-func (p P) f()  {
+func (p P) f() {
 	fmt.Println(2222)
 }
 
 type Student struct {
 	name string
-	age int16
+	age  int16
 }
 
 func (s *Student) f1() {
 	s.name = "wxh"
 }
 
-func hehe(yu url.Values)  {
-	yu.Add("lang","sjs")
+func hehe(yu url.Values) {
+	yu.Add("lang", "sjs")
 	yu = nil
 }
 
-func main()  {
+func main() {
 	//var o P = 3
 	//o.f()
 	//
@@ -55,7 +55,7 @@ func main()  {
 	//	fmt.Println(39)
 	//}
 	//fmt.Printf("%#v",s2)
-	m:=url.Values{"lang":{"en","zh"}}
+	m := url.Values{"lang": {"en", "zh"}}
 	//m.Add("lang","ch")
 	//fmt.Println(m["lang"])
 	//hehe(m)
@@ -65,9 +65,9 @@ func main()  {
 	//s:=m
 	//s.Add("lang","wh")
 	hehe(m)
-	s:=m
-	s.Add("lang","iiii")
-	s=nil
+	s := m
+	s.Add("lang", "iiii")
+	s = nil
 	fmt.Println("=======")
 	fmt.Println(m)
 	fmt.Println("=======")

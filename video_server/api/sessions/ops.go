@@ -2,11 +2,11 @@ package sessions
 
 import (
 	"fmt"
-	"time"
-	"sync"
-	"medicalhealth/video_server/api/defs"
 	"medicalhealth/video_server/api/dbops"
+	"medicalhealth/video_server/api/defs"
 	"medicalhealth/video_server/api/utils"
+	"sync"
+	"time"
 )
 
 var sessionMap *sync.Map
@@ -18,8 +18,8 @@ func init() {
 /**
 *转化为毫秒
  */
-func nowInMilli() int64{
-	return time.Now().UnixNano()/1000000
+func nowInMilli() int64 {
+	return time.Now().UnixNano() / 1000000
 }
 
 func deleteExpiredSession(sid string) {
@@ -33,27 +33,27 @@ func LoadSessionsFromDB() {
 		return
 	}
 
-	r.Range(func(k, v interface{}) bool{
+	r.Range(func(k, v interface{}) bool {
 		ss := v.(*defs.SimpleSession)
-		fmt.Println("key:",k,"value",ss)
+		fmt.Println("key:", k, "value", ss)
 		sessionMap.Store(k, ss)
 		return true
 	})
 }
 
-func GenerateNewSessionId(un string) (string,error) {
+func GenerateNewSessionId(un string) (string, error) {
 	id, _ := utils.NewUUID()
 	ct := nowInMilli()
-	ttl := ct + 30 * 60 * 1000// Severside session valid time: 30 min
+	ttl := ct + 30*60*1000 // Severside session valid time: 30 min
 
 	ss := &defs.SimpleSession{Username: un, TTL: ttl}
 	sessionMap.Store(id, ss)
-	err:=dbops.InsertSession(id, ttl, un)
-	if err!=nil {
-		return "",err
+	err := dbops.InsertSession(id, ttl, un)
+	if err != nil {
+		return "", err
 	}
 
-	return id,nil
+	return id, nil
 }
 
 func IsSessionExpired(sid string) (string, bool) {

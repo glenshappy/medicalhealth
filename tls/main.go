@@ -23,7 +23,7 @@ var html = template.Must(template.New("https").Parse(`
 func main() {
 	r := gin.Default()
 	r.Static("/assets", "./assets")
-	r.StaticFile("/favicon.ico","./resources/favicon.ico")
+	r.StaticFile("/favicon.ico", "./resources/favicon.ico")
 	r.SetHTMLTemplate(html)
 
 	r.GET("/", func(c *gin.Context) {

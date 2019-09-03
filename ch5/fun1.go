@@ -6,64 +6,63 @@ import (
 )
 
 const (
-	AA,BIT0=1<<iota,iota-1
+	AA, BIT0 = 1 << iota, iota - 1
 
-	BB,BIT1
+	BB, BIT1
 
-	CC,BIT2
+	CC, BIT2
 
-	DD ,GG10= 1,iota
+	DD, GG10 = 1, iota
 
-	EE,GG1
+	EE, GG1
 
-	FF,GG1112 = 1<<iota,iota
+	FF, GG1112 = 1 << iota, iota
 
-	GG,GG2
-
+	GG, GG2
 )
 
 func squares() func() int {
 	var x int
 	return func() int {
 		x++
-		return x*x
+		return x * x
 	}
 }
 
-func errorf(linenum int,format string,args ...interface{})  {
-	fmt.Fprintf(os.Stderr,"line %d:",linenum)
-	fmt.Fprintf(os.Stderr,format,args...)
+func errorf(linenum int, format string, args ...interface{}) {
+	fmt.Fprintf(os.Stderr, "line %d:", linenum)
+	fmt.Fprintf(os.Stderr, format, args...)
 	fmt.Fprintln(os.Stderr)
 }
 
-func max(args ...int)  int{
+func max(args ...int) int {
 	var max = 0
-	for _,v:=range args {
-		if v>max {
+	for _, v := range args {
+		if v > max {
 			max = v
 		}
 	}
 	return max
 }
 
-func min(args ...int)  int{
+func min(args ...int) int {
 	var min = 0
-	for _,v:=range args {
-		if v<min {
+	for _, v := range args {
+		if v < min {
 			min = v
 		}
 	}
 	return min
 }
 
-func hehe()  {
+func hehe() {
 	defer println("over")
 	var map1 map[string]int
 	map1["name"] = 30
 
 }
 
-func hehe1(s string)  {
+func hehe1(s string) {
 	switch s {
 	case "name":
 		println(222)
@@ -74,37 +73,33 @@ func hehe1(s string)  {
 	}
 }
 
-
-func main()  {
-	i:=2
+func main() {
+	i := 2
 	fmt.Println(i)
 	hehe1("sjsjsj")
 	hehe()
 	var tempdirs = []int{
-		1,2,3,4,
+		1, 2, 3, 4,
 	}
 	var funcs []func()
 
-	for _,v:=range tempdirs {
+	for _, v := range tempdirs {
 		funcs = append(funcs, func() {
 			fmt.Println(v)
 		})
 	}
 
 	fmt.Println("================")
-	for _,v:=range funcs {
+	for _, v := range funcs {
 		v()
 	}
 	fmt.Println("=================")
 
-
-
-
-	max:=max()
-	min:=min(22,-100,23,-232)
-	fmt.Println(max,min)
-	linenum,format:=12,"error %s--%s:"
-	errorf(linenum,format,"wrong args","nihaode")
+	max := max()
+	min := min(22, -100, 23, -232)
+	fmt.Println(max, min)
+	linenum, format := 12, "error %s--%s:"
+	errorf(linenum, format, "wrong args", "nihaode")
 	//fmt.Println(AA,BB,CC,DD,EE,FF,GG,BIT0,BIT1,BIT2,GG1,GG2)
 	//f:=squares()
 	//fmt.Println(f())
@@ -116,6 +111,5 @@ func main()  {
 	//	println("f1为空")
 	//	f1(3)
 	//}
-
 
 }

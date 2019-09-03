@@ -1,8 +1,8 @@
 package dbops
 
 import (
-	"log"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 )
 
 func ReadVideoDeletionRecord(count int) ([]string, error) {
@@ -48,9 +48,3 @@ func DelVideoDeletionRecord(vid string) error {
 	defer stmtDel.Close()
 	return nil
 }
-
-
-
-
-
-

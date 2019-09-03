@@ -1,8 +1,8 @@
 package dbops
 
 import (
-	"log"
 	_ "github.com/go-sql-driver/mysql"
+	"log"
 )
 
 func AddVideoDeletionRecord(vid string) error {

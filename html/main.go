@@ -6,9 +6,9 @@ import (
 	"os"
 )
 
-func main()  {
-	node,err:=html.Parse(os.Stdin)
-	if err!=nil {
+func main() {
+	node, err := html.Parse(os.Stdin)
+	if err != nil {
 		panic(err)
 	}
 	fmt.Println(node)

@@ -11,89 +11,89 @@ import (
 	"net/http"
 )
 
-func CreateUser(w http.ResponseWriter,r *http.Request,p httprouter.Params){
+func CreateUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	//io.WriteString(w,"create user")
-	loginName:=r.PostFormValue("login_name")
-	pwd:= r.PostFormValue("pwd")
-	err:=dbops.AddUserCredential(loginName,pwd)
-	if err!=nil{
-		defs.SendJsonMsg(w,http.StatusInternalServerError,defs.ReponseMsg{Code:http.StatusInternalServerError,Msg:err.Error()})
+	loginName := r.PostFormValue("login_name")
+	pwd := r.PostFormValue("pwd")
+	err := dbops.AddUserCredential(loginName, pwd)
+	if err != nil {
+		defs.SendJsonMsg(w, http.StatusInternalServerError, defs.ReponseMsg{Code: http.StatusInternalServerError, Msg: err.Error()})
 		return
 	}
-	sid,err:=sessions.GenerateNewSessionId(loginName)
-	if err!=nil {
-		defs.SendJsonMsg(w,http.StatusInternalServerError,defs.ReponseMsg{Code:http.StatusInternalServerError,Msg:err.Error()})
+	sid, err := sessions.GenerateNewSessionId(loginName)
+	if err != nil {
+		defs.SendJsonMsg(w, http.StatusInternalServerError, defs.ReponseMsg{Code: http.StatusInternalServerError, Msg: err.Error()})
 	}
 
-	defs.SendJsonMsg(w,http.StatusOK,defs.ReponseMsg{Code:200,Msg:"成功",Data: map[string]interface{}{
-		"sid":sid,
+	defs.SendJsonMsg(w, http.StatusOK, defs.ReponseMsg{Code: 200, Msg: "成功", Data: map[string]interface{}{
+		"sid": sid,
 	}})
 }
 
-func Login(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
-	loginName:=p.ByName("login_name")
-	pwd:=p.ByName("pwd")
-	pwdDb,err:=dbops.GetUserCredential(loginName)
-	if err!=nil {
-		defs.SendJsonMsg(w,http.StatusInternalServerError,defs.ReponseMsg{Code:http.StatusInternalServerError,Msg:err.Error()})
+func Login(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	loginName := p.ByName("login_name")
+	pwd := p.ByName("pwd")
+	pwdDb, err := dbops.GetUserCredential(loginName)
+	if err != nil {
+		defs.SendJsonMsg(w, http.StatusInternalServerError, defs.ReponseMsg{Code: http.StatusInternalServerError, Msg: err.Error()})
 		return
 	}
-	if pwd!=pwdDb {
-		defs.SendJsonMsg(w,http.StatusOK,defs.ReponseMsg{Code:201,Msg:"密码不正确"})
+	if pwd != pwdDb {
+		defs.SendJsonMsg(w, http.StatusOK, defs.ReponseMsg{Code: 201, Msg: "密码不正确"})
 		return
 	}
-	sid,err:=sessions.GenerateNewSessionId(loginName)
+	sid, err := sessions.GenerateNewSessionId(loginName)
 
-	if err!=nil {
-		defs.SendJsonMsg(w,http.StatusOK,defs.ReponseMsg{Code:202,Msg:"登录失败，请重试！"})
+	if err != nil {
+		defs.SendJsonMsg(w, http.StatusOK, defs.ReponseMsg{Code: 202, Msg: "登录失败，请重试！"})
 	}
-	defs.SendJsonMsg(w,http.StatusOK,defs.ReponseMsg{Code:200,Msg:"登录成功",Data: map[string]interface{}{
-		"sid":sid,
+	defs.SendJsonMsg(w, http.StatusOK, defs.ReponseMsg{Code: 200, Msg: "登录成功", Data: map[string]interface{}{
+		"sid": sid,
 	}})
 }
 
-func GetVideo(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
-	vid:=p.ByName("vid")
-	videoOne,err:=dbops.GetVideoInfo(vid)
-	if err!=nil {
-		defs.SendErrorMsg(w,http.StatusNotFound,"没找到数据")
+func GetVideo(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	vid := p.ByName("vid")
+	videoOne, err := dbops.GetVideoInfo(vid)
+	if err != nil {
+		defs.SendErrorMsg(w, http.StatusNotFound, "没找到数据")
 	}
-	dataStr,_:= json.Marshal(videoOne)
+	dataStr, _ := json.Marshal(videoOne)
 	fmt.Println(videoOne)
-	io.WriteString(w,string(dataStr))
+	io.WriteString(w, string(dataStr))
 }
 
-func GetUserInfo(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
+func GetUserInfo(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var loginName string
-	sid:= r.FormValue("sid")
-	loginName,err1:=sessions.IsSessionExpired(sid)
-	if err1==true {
-		defs.SendJsonMsg(w,http.StatusInternalServerError,map[string]interface{}{
-			"code":http.StatusInternalServerError,
-			"msg":"session已经过期了",
+	sid := r.FormValue("sid")
+	loginName, err1 := sessions.IsSessionExpired(sid)
+	if err1 == true {
+		defs.SendJsonMsg(w, http.StatusInternalServerError, map[string]interface{}{
+			"code": http.StatusInternalServerError,
+			"msg":  "session已经过期了",
 		})
 		return
 	}
 
-	userInfo,err:=dbops.GetUserInfo(loginName)
-	if err!=nil {
-		defs.SendJsonMsg(w,http.StatusInternalServerError,map[string]interface{}{
-			"code":http.StatusInternalServerError,
-			"msg":"内部错误",
+	userInfo, err := dbops.GetUserInfo(loginName)
+	if err != nil {
+		defs.SendJsonMsg(w, http.StatusInternalServerError, map[string]interface{}{
+			"code": http.StatusInternalServerError,
+			"msg":  "内部错误",
 		})
 		return
 	}
-	defs.SendJsonMsg(w,http.StatusOK,map[string]interface{}{
-		"code":http.StatusOK,
-		"msg":"成功",
-		"userinfo":userInfo,
+	defs.SendJsonMsg(w, http.StatusOK, map[string]interface{}{
+		"code":     http.StatusOK,
+		"msg":      "成功",
+		"userinfo": userInfo,
 	})
 }
 
-func CreateComment(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
+func CreateComment(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 }
 
-func GetComment(w http.ResponseWriter,r *http.Request,p httprouter.Params)  {
+func GetComment(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 }

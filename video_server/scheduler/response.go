@@ -1,8 +1,8 @@
-package main 
+package main
 
 import (
-	"net/http"
 	"io"
+	"net/http"
 )
 
 func sendResponse(w http.ResponseWriter, sc int, resp string) {

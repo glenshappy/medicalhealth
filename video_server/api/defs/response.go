@@ -6,17 +6,17 @@ import (
 	"net/http"
 )
 
-func SendErrorMsg(w http.ResponseWriter,sc int,msg string)  {
+func SendErrorMsg(w http.ResponseWriter, sc int, msg string) {
 	w.WriteHeader(sc)
-	io.WriteString(w,msg)
+	io.WriteString(w, msg)
 }
 
-func SendJsonMsg(w http.ResponseWriter,sc int,data interface{})  {
+func SendJsonMsg(w http.ResponseWriter, sc int, data interface{}) {
 	w.WriteHeader(sc)
-	w.Header().Set("Content-Type","application/json")
-	jsonSlice,err:=json.Marshal(data)
-	if err!=nil {
+	w.Header().Set("Content-Type", "application/json")
+	jsonSlice, err := json.Marshal(data)
+	if err != nil {
 		panic(err)
 	}
-	io.WriteString(w,string(jsonSlice))
+	io.WriteString(w, string(jsonSlice))
 }

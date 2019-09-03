@@ -5,8 +5,8 @@ import (
 	"time"
 )
 
-const day  = 24*time.Hour
+const day = 24 * time.Hour
 
-func main()  {
+func main() {
 	fmt.Println(day.Seconds())
 }

@@ -8,16 +8,16 @@ import (
 	"sync"
 )
 
-func init()  {
+func init() {
 	fmt.Println("taskrunner 包中的第二个init")
 }
 
-func TestPack1()  {
+func TestPack1() {
 	fmt.Println("测试包引入")
 }
 
 func deleteVideo(vid string) error {
-	fmt.Printf("delete success:%s\n",vid)
+	fmt.Printf("delete success:%s\n", vid)
 	return nil
 	//ossfn := "videos/" + vid
 	//bn := "avenssi-videos2"
@@ -53,24 +53,24 @@ func VideoClearExecutor(dc dataChan) error {
 	errMap := &sync.Map{}
 	var err error
 
-	forloop:
-		for {
-			select {
-			case vid :=<- dc:
-				go func(id interface{}) {
-					if err := deleteVideo(id.(string)); err != nil {
-						errMap.Store(id, err)
-						return
-					}
-					if err := dbops.DelVideoDeletionRecord(id.(string)); err != nil {
-						errMap.Store(id, err)
-						return 
-					}
-				}(vid)
-			default:
-				break forloop
-			}
+forloop:
+	for {
+		select {
+		case vid := <-dc:
+			go func(id interface{}) {
+				if err := deleteVideo(id.(string)); err != nil {
+					errMap.Store(id, err)
+					return
+				}
+				if err := dbops.DelVideoDeletionRecord(id.(string)); err != nil {
+					errMap.Store(id, err)
+					return
+				}
+			}(vid)
+		default:
+			break forloop
 		}
+	}
 
 	errMap.Range(func(k, v interface{}) bool {
 		err = v.(error)

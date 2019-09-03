@@ -1,11 +1,11 @@
 package dbops
 
 import (
+	"database/sql"
+	"log"
+	"medicalhealth/video_server/api/defs"
 	"strconv"
 	"sync"
-	"log"
-	"database/sql"
-	"medicalhealth/video_server/api/defs"
 )
 
 func InsertSession(sid string, ttl int64, uname string) error {
@@ -34,7 +34,7 @@ func RetrieveSession(sid string) (*defs.SimpleSession, error) {
 	var ttl string
 	var uname string
 	stmtOut.QueryRow(sid).Scan(&ttl, &uname)
-	if err != nil && err != sql.ErrNoRows{
+	if err != nil && err != sql.ErrNoRows {
 		return nil, err
 	}
 
@@ -72,12 +72,11 @@ func RetrieveAllSessions() (*sync.Map, error) {
 			break
 		}
 
-		if ttl, err1 := strconv.ParseInt(ttlstr, 10, 64); err1 == nil{
+		if ttl, err1 := strconv.ParseInt(ttlstr, 10, 64); err1 == nil {
 			ss := &defs.SimpleSession{Username: login_name, TTL: ttl}
 			m.Store(id, ss)
 			log.Printf(" session id: %s, ttl: %d", id, ss.TTL)
 		}
-
 
 	}
 
