@@ -26,7 +26,7 @@ func main() {
 	listRegex,_:=regexp.Compile(`/news/company\.html$`)
 
 	c.OnHTML("div.newIn", func(e *colly.HTMLElement) {
-		fmt.Println("文本节点",e.Name)
+		fmt.Println("文本节点",e.Text)
 	})
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
 		link:=e.Attr("href")
